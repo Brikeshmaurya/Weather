@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="css/style2.css">
+    <title>Weather</title>
+</head>
+
+<body>
+    <div id="outer">
+        <div id="inputbutton" class="search">
+            <div id="input">
+                <input type="text" class="it" id="city" placeholder="Enter City" autofocus="true">
+            </div>
+            <button onclick="fun()" class="btn"><img src="images/search.png" height="26px" /></button>
+        </div>
+        <div id="img">
+            <h2 id="city-h2" class="city">Location</h2>
+            <div id="weather-img">
+                <img src="images/clouds.png" alt="clear" height="100px" width="100px">
+            </div>
+            <h2 class="weather-rn">Weather</h2>
+        </div>
+        <div id="parent">
+            <div id="humidity">
+                <p><span class="humidity">--</span>%</p>
+                <p>Humidity</p>
+            </div>
+            <div id="wind">
+                <p><span class="wind1">--</span>Km/h</p>
+                <p>Wind Speed</p>
+            </div>
+            <div id="temp">
+                <p><span class="temp"></span>℃</p>
+                <p>Temperature</p>
+            </div>
+        </div>
+    </div>
+    <script>
+        // var apiUrl="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+        // var apiKey="c84dd30c60e6ca81a9592bcac0548eaf";
+        var apiUrl = "https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+        var apiKey = "917569dbb1a9393ed4003c08511c409b";
+
+        const inputbox = document.querySelector(".search input");
+        const searchbox = document.querySelector(".search button");
+
+        async function checkWeather(city) {
+            const res = await fetch(apiUrl + city + "&appid=" + apiKey);
+            const d = await res.json();
+            console.log(d);
+
+            document.getElementsByClassName("temp")[0].innerHTML = d.main.temp;
+            document.getElementsByClassName("humidity")[0].innerHTML = d.main.humidity;
+            document.getElementById("city-h2").innerHTML = d.name;
+            document.getElementsByClassName("wind1")[0].innerHTML = d.wind.speed;
+            var image = document.getElementsByClassName("weather-rn")[0].innerHTML = d.weather[0].main;
+
+        }
+        function fun() {
+            var cityInput = document.querySelector('.search input').value;
+            checkWeather(cityInput);
+        }
+    </script>
+
+</body>
+
+</html>
